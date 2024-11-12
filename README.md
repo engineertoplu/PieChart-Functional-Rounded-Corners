@@ -1,6 +1,6 @@
 # PieChartFunctional
 
-Piechart from highcharts library in html format. Android, Ios, Web
+Rounded corner Piechart from highcharts library in html format. Android, Ios, Web
 
 TR
 -Köşeleri yuvarlanmış pie chart için highcharts kütüphanesi kullanıldı.
