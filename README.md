@@ -49,3 +49,9 @@ this.update({
                 borderColor: 'black',
                 borderWidth: 2
             }); // Adds 2-unit black borders to the area, which can be useful at selection time.
+
+<img width="270" alt="Screen Shot 2024-11-12 at 14 37 49" src="https://github.com/user-attachments/assets/cb967054-fd56-4837-be17-e3ed4a51299e">
+<img width="241" alt="Screen Shot 2024-11-12 at 14 38 12" src="https://github.com/user-attachments/assets/8bcdca30-f85e-4faf-8bc2-5c9b9e7ffbb9">
+<img width="244" alt="Screen Shot 2024-11-12 at 14 39 03" src="https://github.com/user-attachments/assets/bf0f3ebb-f816-4893-89d5-cc896f8d8438">
+
+
