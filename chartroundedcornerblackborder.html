@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <div id="container" style="height: 200px; margin: 0 auto"></div>
+
+    <script type="text/javascript">
+        Highcharts.chart('container', {
+            chart: {
+                type: 'pie',
+                margin: [0, 0, 0, 0]
+            },
+            title: null,
+            tooltip: '',
+            plotOptions: {
+                series: {
+                    allowPointSelect: true,
+                    inactiveOtherPoints: false,
+                    point: {
+                        events: {
+                            click: function () {
+                                alert(
+                                    this.name + ',' + !this.sliced
+                                );
+
+                                this.series.data.forEach(point => {
+                                    if (point !== this) {
+                                        point.slice(false);
+                                    }
+                                });
+
+                                this.slice(!this.sliced);
+                                this.setState("");
+
+                                if (this.sliced) {
+                                    let borderColor = Highcharts.color(this.color).setOpacity(0.3).get();
+                                    this.update({
+                                        borderColor: 'black',
+                                        borderWidth: 2
+                                    });
+                                } else {
+                                    this.update({
+                                        borderColor: 'white',
+                                        borderWidth: 2
+                                    });
+                                }
+
+                                var points = this.series.points;
+                                points.forEach(point => {
+                                    if (point !== this) {
+                                        point.slice(false);
+                                        point.update({
+                                            borderColor: 'white',
+                                            borderWidth: 2
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 700
+                    }
+                },
+                pie: {
+                    allowPointSelect: true,
+                    borderColor: 'white',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    borderWidth: 2,
+                    borderRadius: 8
+                }
+            },
+            series: [{
+                innerSize: "75%",
+                data: [
+                    { name: 'Chrome', y: 61.41, color:'red' },
+                    { name: 'Internet Explorer', y: 11.84, color:'green' },
+                    { name: 'Firefox', y: 10.85, color:'blue' },
+                    { name: 'Edge', y: 4.67, color:'yellow' },
+                    { name: 'Safari', y: 4.18, color:'pink' },
+                    { name: 'Sogou Explorer', y: 1.64, color:'orange' }
+                ]
+            }]
+        });
+    </script>
+
+</body>
+
+</html>
