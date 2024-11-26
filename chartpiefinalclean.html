@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .chart-container {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      }
+      canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      }
+      #primaryPie {
+      z-index: 1; /* Alttaki pie */
+      }
+      #secondaryPie {
+      z-index: 2; /* Üstteki pie */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chart-container">
+      <!-- Üstteki pie grafiği  -->
+      <canvas id="secondaryPie"></canvas>
+      <!-- Alttaki pie grafiği -->
+      <canvas id="primaryPie"></canvas>
+    </div>
+    <script>
+      let selectedIndex = null; // Tıklanan dilim index'ini takip etmek için
+      
+      // Üstteki grafik
+      const secondaryCtx = document.getElementById('secondaryPie').getContext('2d');
+      const secondaryData = {
+        labels: ['Kırmızı', 'Mavi', 'Yeşil'],
+        datasets: [{
+          data: [60, 3, 30],
+          backgroundColor: ['red', 'blue', 'green'], // Dilim renkleri
+          borderWidth: 0, // Kenarlık yok
+          borderColor: 'transparent', // Kenarlık yok
+          borderRadius: 5, // Border radius
+          spacing: 2, // Dilimler arasında boşluk
+        }]
+      };
+      
+      const secondaryChart = new Chart(secondaryCtx, {
+        type: 'doughnut',
+        data: secondaryData,
+        options: {
+          responsive: true,
+          cutout: '83%', // İç boşluk
+          rotation: Math.PI * 0.5, // Başlangıç açısını ayarla
+          plugins: {
+            tooltip: {
+              enabled: false // Tooltip devre dışı
+            },
+            legend: {
+              display: false // Legend'ı (renk paleti) gizle
+            }
+          },
+          hover: {
+            mode: null // Hover efektini tamamen devre dışı bırak
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          },
+          onClick: (event) => {
+            // Click eventi ile tıklanan dilimin index'ini alıyoruz
+            const activePoints = secondaryChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+            if (activePoints.length > 0) {
+              const index = activePoints[0].index;
+              const label = secondaryData.labels[index]; // Tıklanan dilimin ismi
+      
+              // Tıklanan dilimin rengini alıyoruz
+              const secondaryColor = secondaryData.datasets[0].backgroundColor[index];
+              const primaryColor = primaryData.datasets[0].backgroundColor[index];
+      
+              // Renkleri karşılaştır ve eğer renkler farklıysa true, aynıysa false olarak alert göster
+              const isDifferentColor = secondaryColor !== primaryColor;
+              alert(`${label},${isDifferentColor}`);
+      
+              if (selectedIndex === index) {
+                // Eğer aynı dilime tekrar tıklanırsa, dilimleri beyaz yapıyoruz
+                animateCutoutChangeColorAnimate(index, secondaryData.datasets[0].backgroundColor[index], 74, 83, 300, false)
+                secondaryData.datasets[0].backgroundColor = ['red', 'blue', 'green'];
+                selectedIndex = null;
+              } else {
+                // İlk defa tıklanıyorsa
+                primaryData.datasets[0].backgroundColor = ['white', 'white', 'white']; // Tüm dilimleri beyaz yap
+                secondaryData.datasets[0].backgroundColor = ['red', 'blue', 'green']; 
+                secondaryData.datasets[0].backgroundColor[index] = secondaryData.datasets[0].backgroundColor[index]; 
+                animateCutoutChangeColorAnimate(index, secondaryData.datasets[0].backgroundColor[index], 83, 74, 300, true)
+                selectedIndex = index; // Tıklanan dilimin index'ini kaydet
+              }
+      
+              primaryChart.update('none'); // Değişiklikleri yansıtmak için chart'ı güncelliyoruz
+              secondaryChart.update();
+            }
+          }
+        }
+      });
+      
+      const primaryCtx = document.getElementById('primaryPie').getContext('2d');
+      const primaryData = {
+        labels: ['Kırmızı', 'Mavi', 'Yeşil'],
+        datasets: [{
+          data: [60, 3, 30],
+          backgroundColor: ['white', 'white', 'white'], 
+          borderWidth: 0, // Kenarlık yok
+          borderColor: 'transparent', // Kenarlık yok
+          borderRadius: 5, // Border radius
+          spacing: 2, 
+        }]
+      };
+      
+      const primaryChart = new Chart(primaryCtx, {
+        type: 'doughnut',
+        data: primaryData,
+        options: {
+          responsive: true,
+          cutout: '74%', 
+          rotation: Math.PI * 0.5, // Başlangıç açısını ayarla
+          plugins: {
+            tooltip: {
+              enabled: false // Tooltip devre dışı
+            },
+            legend: {
+              display: false // Legend'ı (renk paleti) gizle
+            }
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      });
+      
+      
+      function animateCutoutChangeColorAnimate(index, targetColor_, initialCutout_, targetCutout_, duration_, isGrow = true) {
+      const duration = duration_; 
+      const steps = 20; 
+      const interval = duration / steps;
+      
+      let step = 0;
+      const initialCutout = initialCutout_;
+      const targetCutout = targetCutout_;
+      
+      
+      const initialColor = targetColor_
+      
+      const intervalId = setInterval(() => {
+      step++;
+      var currentCutout = 0
+      
+      var cutoutDiff = 0
+      if (initialCutout>targetCutout) {
+      cutoutDiff = (initialCutout - targetCutout) / steps;
+      } else {
+      cutoutDiff = (targetCutout - initialCutout) / steps;
+      }
+      
+      if (isGrow) {
+         currentCutout  = initialCutout - cutoutDiff * step;
+      } else {
+         currentCutout  = initialCutout + cutoutDiff * step;
+      }
+      
+      primaryData.datasets[0].backgroundColor[index] = initialColor;
+      
+      primaryChart.options.cutout = `${currentCutout}%`;
+      primaryChart.update('none'); 
+      
+      if (step === steps) {
+        clearInterval(intervalId);
+      }
+      }, interval);
+      }
+      
+    </script>
+  </body>
+</html>
