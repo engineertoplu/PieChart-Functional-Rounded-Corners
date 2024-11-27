@@ -9,6 +9,7 @@ TR
 -Başka bir alan seçildiğinde daha önce seçilmiş olan alan önceki duruma geçmesi ayarlandı.
 -Bu kodlar html içinde kullanıldığı gibi webview olarak da mobilde kullanılabilir fakat kurumsal yerler için lisans isteyebilir.
 -webview içinde onJsAlert ile yakalanabilir
+-Chart js örneği de eklendi
 
 
 EN
@@ -18,6 +19,7 @@ EN
 -When another area is selected, the previously selected area is set to return to its previous state.
 -These codes can be used in html as well as in webview on mobile, but may require a license for corporate locations.
 -It can be caught with onJsAlert in webview
+-chart js example also added
 
 
 
