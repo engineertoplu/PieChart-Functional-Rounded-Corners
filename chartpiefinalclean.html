@@ -177,6 +177,9 @@
       
       if (step === steps) {
         clearInterval(intervalId);
+        if (!isGrow) {
+          primaryData.datasets[0].backgroundColor[index] = 'white';
+        }
       }
       }, interval);
       }
