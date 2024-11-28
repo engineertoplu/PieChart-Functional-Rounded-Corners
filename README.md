@@ -56,4 +56,12 @@ this.update({
 <img width="241" alt="Screen Shot 2024-11-12 at 14 38 12" src="https://github.com/user-attachments/assets/8bcdca30-f85e-4faf-8bc2-5c9b9e7ffbb9">
 <img width="244" alt="Screen Shot 2024-11-12 at 14 39 03" src="https://github.com/user-attachments/assets/bf0f3ebb-f816-4893-89d5-cc896f8d8438">
 
+--------------------------------
 
+chartpiefinalclean.html
+TR
+label ismine göre tıklanan alanlar ilkin tıklanıyorsa label ismi ve true değeri, büyüyen alan tekrar tıklanırsa label ismi ve false değeri döneri döner. Küçükken büyüyen alanlar her zaman label ismiyle true döner.
+EN 
+If the areas clicked according to the label name are clicked first, the label name and true value are returned, if the growing area is clicked again, the label name and false value are returned. The areas growing when small always return true with the label name.
+
+![Screen_Recording_20241128_161728_Chrome-ezgif com-crop](https://github.com/user-attachments/assets/975c111f-68ea-4a95-a472-c0b6ee44a719)
